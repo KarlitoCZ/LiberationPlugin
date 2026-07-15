@@ -6,7 +6,11 @@ using LabApi.Events.Arguments.Scp173Events;
 using LabApi.Events.Arguments.Scp939Events;
 using LabApi.Events.CustomHandlers;
 using LabApi.Features.Wrappers;
+using MapGeneration;
 using PlayerRoles;
+using PlayerRoles.FirstPersonControl.Spawnpoints;
+using UnityEngine;
+using Random = System.Random;
 
 
 namespace LiberationPlugin;
@@ -24,21 +28,34 @@ public class EventsHandler : CustomEventsHandler
         if (disarm == null) return;
         if (IsLiberationPlayer(disarm))
         {
-            ev.Player.DisarmedBy = null;
             SpawnHandling.Instance.GiveLiberatorRole(ev.Player, LiberatorRank.Awakened);
             ev.IsAllowed = false;
+            //ev.Player.DisarmedBy = null;
+            ev.Player.IsDisarmed = false;
+
+            if (RoleSpawnpointManager.TryGetSpawnpointForRole(RoleTypeId.NtfPrivate, out ISpawnpointHandler spawnpoint));
+            spawnpoint.TryGetSpawnpoint(out Vector3 position, out float rot);
+            ev.Player.Position = position;
+
         }
     }
 
     public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev)
     {
         if (ev.NewRole.RoleTypeId == RoleTypeId.Tutorial) return;
+        LiberatorPlayer? playerToRemove = null;
         foreach (var libPlayer in SpawnHandling.Instance.ActiveLiberationPlayers)
         {
             if (libPlayer.Player == ev.Player)
             {
-                SpawnHandling.Instance.CleanUpLiberatorRole(libPlayer);
+                playerToRemove =  libPlayer;
+                return;
             }
+        }
+
+        if (playerToRemove != null)
+        {
+            SpawnHandling.Instance.CleanUpLiberatorRole(playerToRemove);
         }
     }
 

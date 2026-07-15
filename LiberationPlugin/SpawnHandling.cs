@@ -105,7 +105,6 @@ public sealed class SpawnHandling
         
         foreach (var player in chosenPlayers)
         {
-            
             GiveLiberatorRole(player, LiberatorRank.Freeborn);
             SpawnPlayer(player);
         }
