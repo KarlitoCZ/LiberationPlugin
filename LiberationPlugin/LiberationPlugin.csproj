@@ -50,4 +50,8 @@
             <HintPath>$(SL_REFERENCES)/NorthwoodLib.dll</HintPath>
         </Reference>
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Weapons\" />
+    </ItemGroup>
 </Project>

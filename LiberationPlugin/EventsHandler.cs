@@ -18,9 +18,16 @@ public class EventsHandler : CustomEventsHandler
         return SpawnHandling.Instance.ActiveLiberationPlayers.Any(lp => lp.Player == player);
     }
 
-    public override void OnPlayerJoined(PlayerJoinedEventArgs ev)
+    public override void OnPlayerEscaping(PlayerEscapingEventArgs ev)
     {
-        
+        var disarm = ev.Player.DisarmedBy;
+        if (disarm == null) return;
+        if (IsLiberationPlayer(disarm))
+        {
+            ev.Player.DisarmedBy = null;
+            SpawnHandling.Instance.GiveLiberatorRole(ev.Player, LiberatorRank.Awakened);
+            ev.IsAllowed = false;
+        }
     }
 
     public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev)

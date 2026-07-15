@@ -20,7 +20,7 @@ public class LiberatorRank
         Loadout = loadout;
     }
 
-    public static readonly LiberatorRank Awakened = new (1, 15,"Awakened", new List<ItemType>
+    public static readonly LiberatorRank Awakened = new (0, 15,"Awakened", new List<ItemType>
     {
         ItemType.Adrenaline,
         ItemType.Medkit,
@@ -28,7 +28,7 @@ public class LiberatorRank
         ItemType.GunE11SR,
         ItemType.GrenadeFlash
     });
-    public static readonly LiberatorRank Freeborn = new (2, 10,"Freeborn", new List<ItemType>
+    public static readonly LiberatorRank Freeborn = new (1, 10,"Freeborn", new List<ItemType>
     {
         ItemType.Adrenaline,
         ItemType.Medkit,
@@ -36,7 +36,7 @@ public class LiberatorRank
         ItemType.GunE11SR,
         ItemType.GrenadeFlash
     });
-    public static readonly LiberatorRank Oathkeeper = new (3, 5,"Oathkeeper", new List<ItemType>()
+    public static readonly LiberatorRank Oathkeeper = new (2, 5,"Oathkeeper", new List<ItemType>()
     {
         ItemType.Adrenaline,
         ItemType.Medkit,

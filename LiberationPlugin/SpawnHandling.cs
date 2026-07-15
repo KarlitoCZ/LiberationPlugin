@@ -55,12 +55,12 @@ public sealed class SpawnHandling
     {
         Room gateARoom = Room.List.FirstOrDefault(r => r.Name == RoomName.EzIntercom);
         if (gateARoom == null) return;
-        var _random = new Random();
+        var random = new Random();
 
         Vector3 localOffset = new Vector3(-2.5f, -5.0f, 2.7f);
         Vector3 spawnPosition = gateARoom.Transform.TransformPoint(localOffset);
         player.Position = spawnPosition +
-                          new Vector3((float)_random.NextDouble() - 0.5f, 0.0f, (float)_random.NextDouble() - 0.5f);
+                          new Vector3((float)random.NextDouble() - 0.5f, 0.0f, (float)random.NextDouble() - 0.5f);
         player.Rotation = gateARoom.Rotation;
     }
 
@@ -78,7 +78,7 @@ public sealed class SpawnHandling
             player.Inventory.ServerAddItem(i, ItemAddReason.StartingItem);
         }
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 2; i++)
         {
             player.Inventory.ServerAddItem(ItemType.Ammo556x45, ItemAddReason.StartingItem);
         }
@@ -87,7 +87,6 @@ public sealed class SpawnHandling
             new Color32(255, 255, 255, 255), 3, 1, 3, new Color32(255, 89, 106, 255), new Color32(168, 34, 54, 255));
 
         player.SendHint("Arrest and escort everyone. \n Work with SCPs to win. ", duration: 15f);
-        player.EnableEffect(new SpawnProtected(), 1, 10f, true);
     }
 
     public void CleanUpLiberatorRole(LiberatorPlayer player)
@@ -96,16 +95,18 @@ public sealed class SpawnHandling
         player.Player.CustomInfo = "";
     }
 
-public bool SpawnWave()
+    public bool SpawnWave()
     {
         var players = Player.List;
         if (players.Count <= LiberationPlugin.PluginConfig.TeamCapMin) return false;
         
         var chosenPlayers = GetSpawnWavePlayers(LiberationPlugin.PluginConfig.TeamCapMin, LiberationPlugin.PluginConfig.TeamCapMax);
-
+        if (chosenPlayers.Count <= LiberationPlugin.PluginConfig.TeamCapMin) return false;
+        
         foreach (var player in chosenPlayers)
         {
-            GiveLiberatorRole(player, LiberatorRank.Awakened);
+            
+            GiveLiberatorRole(player, LiberatorRank.Freeborn);
             SpawnPlayer(player);
         }
         
