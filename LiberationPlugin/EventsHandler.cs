@@ -3,12 +3,14 @@ using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.Scp049Events;
 using LabApi.Events.Arguments.Scp096Events;
 using LabApi.Events.Arguments.Scp173Events;
+using LabApi.Events.Arguments.Scp3114Events;
 using LabApi.Events.Arguments.Scp939Events;
 using LabApi.Events.CustomHandlers;
 using LabApi.Features.Wrappers;
 using MapGeneration;
 using PlayerRoles;
 using PlayerRoles.FirstPersonControl.Spawnpoints;
+using PlayerRoles.PlayableScps.Scp106;
 using UnityEngine;
 using Random = System.Random;
 
@@ -28,15 +30,18 @@ public class EventsHandler : CustomEventsHandler
         if (disarm == null) return;
         if (IsLiberationPlayer(disarm))
         {
-            SpawnHandling.Instance.GiveLiberatorRole(ev.Player, LiberatorRank.Awakened);
-            ev.IsAllowed = false;
-            //ev.Player.DisarmedBy = null;
             ev.Player.IsDisarmed = false;
+            SpawnHandling.Instance.GiveLiberatorRole(ev.Player, LiberatorRank.All.ElementAt(0));
+            ev.IsAllowed = false;
+            
+            Room outside = Room.List.FirstOrDefault(r => r.Name == RoomName.Outside);
+            if (outside == null) return;
+            var random = new Random();
 
-            if (RoleSpawnpointManager.TryGetSpawnpointForRole(RoleTypeId.NtfPrivate, out ISpawnpointHandler spawnpoint));
-            spawnpoint.TryGetSpawnpoint(out Vector3 position, out float rot);
-            ev.Player.Position = position;
-
+            Vector3 localOffset = new Vector3(136.0f, -2.5f, -31.0f);
+            Vector3 spawnPosition = outside.Transform.TransformPoint(localOffset);
+            ev.Player.Position = spawnPosition +
+                              new Vector3((float)random.NextDouble() - 0.5f, 0.0f, (float)random.NextDouble() - 0.5f);
         }
     }
 
@@ -64,9 +69,15 @@ public class EventsHandler : CustomEventsHandler
         if (ev.Attacker == null) return;
 
         bool victimLiberator = IsLiberationPlayer(ev.Player);
-        bool attackerScp = ev.Attacker.Role.GetTeam() == Team.SCPs;
+        bool attackerScp = ev.Attacker.IsSCP;
+        bool attackerLiberator = IsLiberationPlayer(ev.Attacker);
+        bool victimScp = ev.Player.IsSCP;
 
         if (attackerScp && victimLiberator)
+        {
+            ev.IsAllowed = false;
+        }
+        if (victimScp && attackerLiberator)
         {
             ev.IsAllowed = false;
         }
@@ -119,4 +130,13 @@ public class EventsHandler : CustomEventsHandler
             ev.IsAllowed = false;
         }
     }
+
+    public override void OnScp3114StrangleStarting(Scp3114StrangleStartingEventArgs ev)
+    {
+        if (IsLiberationPlayer(ev.Target))
+        {
+            ev.IsAllowed = false;
+        }
+    }
+    
 }

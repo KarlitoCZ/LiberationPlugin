@@ -78,15 +78,17 @@ public sealed class SpawnHandling
             player.Inventory.ServerAddItem(i, ItemAddReason.StartingItem);
         }
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 4; i++)
         {
-            player.Inventory.ServerAddItem(ItemType.Ammo556x45, ItemAddReason.StartingItem);
+            player.Inventory.ServerAddItem(ItemType.Ammo9x19, ItemAddReason.StartingItem);
+            player.Inventory.ServerAddItem(ItemType.Ammo44cal, ItemAddReason.StartingItem);
         }
 
         KeycardGiver.Instance.GiveKeycard(player, ItemType.KeycardCustomSite02, "Liberator Keycard",
             new Color32(255, 255, 255, 255), 3, 1, 3, new Color32(255, 89, 106, 255), new Color32(168, 34, 54, 255));
 
         player.SendHint("Arrest and escort everyone. \n Work with SCPs to win. ", duration: 15f);
+        player.EnableEffect<SpawnProtected>(1, 10f, true);
     }
 
     public void CleanUpLiberatorRole(LiberatorPlayer player)
@@ -110,7 +112,7 @@ public sealed class SpawnHandling
         }
         
         Announcer.Message(
-            $".g2 .g5 $PITCH_0.97 ATTENTION ALL PERSONNEL. $PITCH_1 .g2 BREACH .g4 DETECTED IN ENTRANCE . ZONE. $PITCH_0.93 INDENTIFIED {chosenPlayers.Count} UNAUTHORIZED $PITCH_1 L A F PERSONNEL $PITCH_1 .g1",
+            $".g2 .g5 $PITCH_0.97 ATTENTION ALL PERSONNEL. $PITCH_1 .g2 BREACH .g4 DETECTED IN ENTRANCE ZONE. $PITCH_0.93 INDENTIFIED {chosenPlayers.Count} UNAUTHORIZED $PITCH_1 L A F PERSONNEL $PITCH_1 .g1",
             $"Attention all personnel. Breach detected in Entrance-Zone. Identified {chosenPlayers.Count} unauthorized Liberation. Armed. Forces. personnel.");
         
         return true;

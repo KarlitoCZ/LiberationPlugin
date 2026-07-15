@@ -25,7 +25,7 @@ public class LiberatorRank
         ItemType.Adrenaline,
         ItemType.Medkit,
         ItemType.ArmorCombat,
-        ItemType.GunE11SR,
+        ItemType.GunFSP9,
         ItemType.GrenadeFlash
     });
     public static readonly LiberatorRank Freeborn = new (1, 10,"Freeborn", new List<ItemType>
@@ -33,7 +33,7 @@ public class LiberatorRank
         ItemType.Adrenaline,
         ItemType.Medkit,
         ItemType.ArmorCombat,
-        ItemType.GunE11SR,
+        ItemType.GunFSP9,
         ItemType.GrenadeFlash
     });
     public static readonly LiberatorRank Oathkeeper = new (2, 5,"Oathkeeper", new List<ItemType>()
@@ -41,7 +41,7 @@ public class LiberatorRank
         ItemType.Adrenaline,
         ItemType.Medkit,
         ItemType.ArmorCombat,
-        ItemType.GunE11SR,
+        ItemType.GunFSP9,
         ItemType.GrenadeFlash
     });
 
