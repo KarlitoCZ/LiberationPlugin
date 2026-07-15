@@ -14,8 +14,16 @@ public class ForceSpawnCommand : ICommand
     
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, [UnscopedRef] out string response)
     {
-        SpawnHandling.Instance.SpawnWave();
-        response = "Spawned";
+        var status = SpawnHandling.Instance.SpawnWave();
+        if (status)
+        {
+            response = "Spawned";
+        }
+        else
+        {
+            response = "Spawn Failed";
+        }
+        
         return true;
     }
 
