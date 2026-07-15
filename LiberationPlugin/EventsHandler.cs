@@ -48,8 +48,8 @@ public class EventsHandler : CustomEventsHandler
         {
             if (libPlayer.Player == ev.Player)
             {
-                playerToRemove =  libPlayer;
-                return;
+                playerToRemove = libPlayer;
+                break;
             }
         }
 
