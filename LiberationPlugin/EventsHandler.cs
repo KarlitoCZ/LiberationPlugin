@@ -39,12 +39,10 @@ public class EventsHandler : CustomEventsHandler
     {
         if (ev.Attacker == null) return;
 
-        bool attackerLiberator = IsLiberationPlayer(ev.Attacker);
         bool victimLiberator = IsLiberationPlayer(ev.Player);
         bool attackerScp = ev.Attacker.Role.GetTeam() == Team.SCPs;
-        bool victimScp = ev.Player.Role.GetTeam() == Team.SCPs;
 
-        if ((attackerLiberator && victimScp) || (attackerScp && victimLiberator))
+        if (attackerScp && victimLiberator)
         {
             ev.IsAllowed = false;
         }
@@ -52,7 +50,7 @@ public class EventsHandler : CustomEventsHandler
 
     public override void OnScp049Attacking(Scp049AttackingEventArgs ev)
     {
-        if (ev.Target != null && IsLiberationPlayer(ev.Target))
+        if (IsLiberationPlayer(ev.Target))
         {
             ev.IsAllowed = false;
         }
@@ -60,6 +58,10 @@ public class EventsHandler : CustomEventsHandler
 
     public override void OnScp049UsingSense(Scp049UsingSenseEventArgs ev)
     {
+        if (IsLiberationPlayer(ev.Target))
+        {
+            ev.IsAllowed = false;
+        }
     }
 
     public override void OnScp173AddingObserver(Scp173AddingObserverEventArgs ev)
@@ -72,7 +74,7 @@ public class EventsHandler : CustomEventsHandler
 
     public override void OnScp173Snapping(Scp173SnappingEventArgs ev)
     {
-        if (ev.Target != null && IsLiberationPlayer(ev.Target))
+        if (IsLiberationPlayer(ev.Target))
         {
             ev.IsAllowed = false;
         }
@@ -80,7 +82,7 @@ public class EventsHandler : CustomEventsHandler
 
     public override void OnScp939Attacking(Scp939AttackingEventArgs ev)
     {
-        if (ev.Target != null && IsLiberationPlayer(ev.Target))
+        if (IsLiberationPlayer(ev.Target))
         {
             ev.IsAllowed = false;
         }

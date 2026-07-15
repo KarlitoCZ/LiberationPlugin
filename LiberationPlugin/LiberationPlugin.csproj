@@ -8,12 +8,13 @@
 
     <Target Name="CopyToPluginFolder" AfterTargets="Build">
         <Copy SourceFiles="$(TargetPath)"
-              DestinationFolder="/home/karlito/.config/SCP Secret Laboratory/LabAPI/plugins/7777/" />
+              DestinationFolder="/home/karlito/.config/SCP Secret Laboratory/LabAPI/plugins/7777/"/>
     </Target>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="All" Version="1.0.3"/>
     </ItemGroup>
+    
     <ItemGroup>
         <Reference Include="Assembly-Csharp">
             <HintPath>$(SL_REFERENCES)/Assembly-CSharp.dll</HintPath>

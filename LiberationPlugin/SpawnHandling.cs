@@ -1,18 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CommandSystem.Commands.RemoteAdmin.Inventory;
 using CustomPlayerEffects;
-using Interactables.Interobjects.DoorUtils;
 using InventorySystem;
 using InventorySystem.Items;
-using InventorySystem.Items.Keycards;
 using LabApi.Features.Wrappers;
 using LiberationPlugin.Util;
 using MapGeneration;
 using PlayerRoles;
 using UnityEngine;
-using KeycardItem = InventorySystem.Items.Keycards.KeycardItem;
 using Random = System.Random;
 
 namespace LiberationPlugin;
@@ -71,8 +67,6 @@ public sealed class SpawnHandling
     public void GiveLiberatorRole(Player player, LiberatorRank rank)
     {
         player.Role = RoleTypeId.Tutorial;
-        player.GroupName = "SCP";
-        player.GroupColor = "red";
 
         var libPlayer = new LiberatorPlayer(player, rank);
         ActiveLiberationPlayers.Add(libPlayer);
