@@ -7,6 +7,7 @@ using InventorySystem;
 using InventorySystem.Items;
 using LabApi.Features.Wrappers;
 using LiberationPlugin.Util;
+using LiberationPlugin.Weapons;
 using MapGeneration;
 using MEC;
 using PlayerRoles;
@@ -82,8 +83,11 @@ public sealed class SpawnHandling
 
         foreach (var i in rank.Loadout)
         {
-            //player.Inventory.ServerAddItem(i, ItemAddReason.StartingItem);
+            player.Inventory.ServerAddItem(i, ItemAddReason.StartingItem);
         }
+
+        var stunGun = new StunGun();
+        stunGun.Give(player);
         
         player.SetAmmo(ItemType.Ammo44cal, 18);
         player.SetAmmo(ItemType.Ammo9x19, 150);
@@ -116,8 +120,8 @@ public sealed class SpawnHandling
         }
         
         Announcer.Message(
-            $".g2 .g5 $PITCH_0.97 ATTENTION ALL PERSONNEL. $PITCH_1 .g2 BREACH .g4 DETECTED IN ENTRANCE ZONE. $PITCH_0.93 INDENTIFIED {chosenPlayers.Count} UNAUTHORIZED $PITCH_1 L A F PERSONNEL $PITCH_1 .g1",
-            $"Attention all personnel. Breach detected in Entrance-Zone. Identified {chosenPlayers.Count} unauthorized Liberation. Armed. Forces. personnel.");
+            $".g2 .g5 $PITCH_0.97 ATTENTION ALL PERSONNEL. $PITCH_1 .g2 BREACH .g4 DETECTED IN ENTRANCE ZONE. $PITCH_0.93 INDENTIFIED {chosenPlayers.Count} UNAUTHORIZED $PITCH_1 L A F PERSONNEL $PITCH_1 .g1 . . LETHAL FORCE AUTHORIZED",
+            $"Attention all personnel. Breach detected in Entrance-Zone. Identified {chosenPlayers.Count} unauthorized Liberation. Armed. Forces. personnel. Lethal Force Authorized.");
         
         return true;
     }

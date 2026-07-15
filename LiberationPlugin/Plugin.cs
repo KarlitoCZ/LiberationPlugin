@@ -2,6 +2,7 @@
 using LabApi.Events.CustomHandlers;
 using LabApi.Features;
 using LabApi.Loader.Features.Plugins;
+using LiberationPlugin.Weapons;
 
 namespace LiberationPlugin;
 
@@ -30,6 +31,7 @@ public class LiberationPlugin : Plugin<Config>
         Instance = null;
         PluginConfig = null;
         CustomHandlersManager.UnregisterEventsHandler(Events);
+        Weapon.ClearAll();
     }
 
 }

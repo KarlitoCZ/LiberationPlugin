@@ -1,13 +1,26 @@
+using CustomPlayerEffects;
 using LabApi.Features.Wrappers;
+using PlayerStatsSystem;
 
 namespace LiberationPlugin.Weapons;
 
-public sealed class StunGun
+public sealed class StunGun : Weapon
 {
-    private List<Item> items = new();
-    
-    bool IsSelf(Item item)
+    public override ItemType ItemType => ItemType.GunRevolver;
+    private float _duration = 10f;
+
+    public override void OnHurting(Player attacker, Player target, DamageHandlerBase handler, ref bool isAllowed)
     {
-        return false;
+        target.EnableEffect<Blurred>(10, _duration, false);
+        target.EnableEffect<Slowness>(100, _duration, false);
+        target.EnableEffect<Blindness>(50, _duration, false);
+        target.CurrentItem = null;
+        attacker.SendHitMarker();
+        isAllowed = false;
+    }
+
+    public override void OnEquipped(Player player)
+    {
+        player.SendHint($"<color=#fcba03>Stun Gun</color>\nStuns players for {(int)_duration} seconds", 2.5f);
     }
 }

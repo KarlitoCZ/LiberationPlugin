@@ -81,6 +81,63 @@ public class EventsHandler : CustomEventsHandler
         {
             ev.IsAllowed = false;
         }
+        
+        if (ev.Attacker != null && ev.Attacker.CurrentItem?.Base is { } item)
+        {
+            bool allowed = true;
+            Weapon.Get(item.ItemSerial)?.OnHurting(ev.Attacker, ev.Player, ev.DamageHandler, ref allowed);
+            if (!allowed) ev.IsAllowed = false;
+        }
+    }
+
+    public override void OnPlayerShootingWeapon(PlayerShootingWeaponEventArgs ev)
+    {
+        Weapon.Get(ev.FirearmItem.Base.ItemSerial)?.OnShooting(ev.Player);
+    }
+
+    public override void OnPlayerShotWeapon(PlayerShotWeaponEventArgs ev)
+    {
+        Weapon.Get(ev.FirearmItem.Base.ItemSerial)?.OnShot(ev.Player);
+    }
+
+    public override void OnPlayerReloadingWeapon(PlayerReloadingWeaponEventArgs ev)
+    {
+        Weapon.Get(ev.FirearmItem.Base.ItemSerial)?.OnReloading(ev.Player);
+    }
+
+    public override void OnPlayerReloadedWeapon(PlayerReloadedWeaponEventArgs ev)
+    {
+        Weapon.Get(ev.FirearmItem.Base.ItemSerial)?.OnReloaded(ev.Player);
+    }
+
+    public override void OnPlayerDryFiringWeapon(PlayerDryFiringWeaponEventArgs ev)
+    {
+        Weapon.Get(ev.FirearmItem.Base.ItemSerial)?.OnDryFiring(ev.Player);
+    }
+
+    public override void OnPlayerAimedWeapon(PlayerAimedWeaponEventArgs ev)
+    {
+        Weapon.Get(ev.FirearmItem.Base.ItemSerial)?.OnAimed(ev.Player);
+    }
+
+    public override void OnPlayerChangedItem(PlayerChangedItemEventArgs ev)
+    {
+        if (ev.OldItem?.Base is { } oldItem)
+            Weapon.Get(oldItem.ItemSerial)?.OnHolstered(ev.Player);
+        if (ev.NewItem?.Base is { } newItem)
+            Weapon.Get(newItem.ItemSerial)?.OnEquipped(ev.Player);
+    }
+
+    public override void OnPlayerPickedUpItem(PlayerPickedUpItemEventArgs ev)
+    {
+        if (ev.Item?.Base is { } item)
+            Weapon.Get(item.ItemSerial)?.OnPickedUp(ev.Player);
+    }
+
+    public override void OnPlayerDroppingItem(PlayerDroppingItemEventArgs ev)
+    {
+        if (ev.Item?.Base is { } item)
+            Weapon.Get(item.ItemSerial)?.OnDropped(ev.Player);
     }
 
     public override void OnScp049Attacking(Scp049AttackingEventArgs ev)
