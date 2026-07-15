@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using CommandSystem.Commands.RemoteAdmin.Inventory;
 using CustomPlayerEffects;
 using Interactables.Interobjects.DoorUtils;
@@ -68,6 +71,8 @@ public sealed class SpawnHandling
     public void GiveLiberatorRole(Player player, LiberatorRank rank)
     {
         player.Role = RoleTypeId.Tutorial;
+        player.GroupName = "SCP";
+        player.GroupColor = "red";
 
         var libPlayer = new LiberatorPlayer(player, rank);
         ActiveLiberationPlayers.Add(libPlayer);
