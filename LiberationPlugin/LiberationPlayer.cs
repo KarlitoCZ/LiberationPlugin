@@ -36,7 +36,7 @@ public class LiberatorRank
         ItemType.GunE11SR,
         ItemType.GrenadeFlash
     });
-    public static readonly LiberatorRank Oathkeeper = new (3, 3,"Oathkeeper", new List<ItemType>()
+    public static readonly LiberatorRank Oathkeeper = new (3, 5,"Oathkeeper", new List<ItemType>()
     {
         ItemType.Adrenaline,
         ItemType.Medkit,
