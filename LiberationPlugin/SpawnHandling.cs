@@ -1,13 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using CustomPlayerEffects;
 using InventorySystem;
 using InventorySystem.Items;
 using LabApi.Features.Wrappers;
 using LiberationPlugin.Util;
 using MapGeneration;
+using MEC;
 using PlayerRoles;
+using PlayerRoles.FirstPersonControl;
+using PlayerRoles.PlayableScps;
 using UnityEngine;
 using Random = System.Random;
 
@@ -64,10 +68,13 @@ public sealed class SpawnHandling
         player.Rotation = gateARoom.Rotation;
     }
 
+    
+
     public void GiveLiberatorRole(Player player, LiberatorRank rank)
     {
         player.Role = RoleTypeId.Tutorial;
 
+        
         var libPlayer = new LiberatorPlayer(player, rank);
         ActiveLiberationPlayers.Add(libPlayer);
 
@@ -75,14 +82,11 @@ public sealed class SpawnHandling
 
         foreach (var i in rank.Loadout)
         {
-            player.Inventory.ServerAddItem(i, ItemAddReason.StartingItem);
+            //player.Inventory.ServerAddItem(i, ItemAddReason.StartingItem);
         }
-
-        for (int i = 0; i < 4; i++)
-        {
-            player.Inventory.ServerAddItem(ItemType.Ammo9x19, ItemAddReason.StartingItem);
-            player.Inventory.ServerAddItem(ItemType.Ammo44cal, ItemAddReason.StartingItem);
-        }
+        
+        player.SetAmmo(ItemType.Ammo44cal, 18);
+        player.SetAmmo(ItemType.Ammo9x19, 150);
 
         KeycardGiver.Instance.GiveKeycard(player, ItemType.KeycardCustomSite02, "Liberator Keycard",
             new Color32(255, 255, 255, 255), 3, 1, 3, new Color32(255, 89, 106, 255), new Color32(168, 34, 54, 255));

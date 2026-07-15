@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using LabApi.Features.Wrappers;
 
 namespace LiberationPlugin;
-
 public class LiberatorRank
 {
     public string Name { get; }
