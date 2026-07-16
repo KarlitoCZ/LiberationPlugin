@@ -98,6 +98,11 @@ public class EventsHandler : CustomEventsHandler
             ev.IsAllowed = false;
             return;
         }
+        if (victimLiberator && attackerLiberator)
+        {
+            ev.IsAllowed = false;
+            return;
+        }
         
         if (ev.Attacker != null && ev.Attacker.CurrentItem?.Base is { } item)
         {
