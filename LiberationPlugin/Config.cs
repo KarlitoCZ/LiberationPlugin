@@ -4,4 +4,6 @@ public class Config
 {
     public int TeamCapMax = 5;
     public int TeamCapMin = 1;
+    public float HumeShieldBuff = 250f;
+    public float StunDuration = 10f;
 }

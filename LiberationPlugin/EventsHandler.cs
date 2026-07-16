@@ -28,21 +28,37 @@ public class EventsHandler : CustomEventsHandler
     {
         var disarm = ev.Player.DisarmedBy;
         if (disarm == null) return;
-        if (IsLiberationPlayer(disarm))
-        {
-            ev.Player.IsDisarmed = false;
-            SpawnHandling.Instance.GiveLiberatorRole(ev.Player, LiberatorRank.All.ElementAt(0));
-            ev.IsAllowed = false;
-            
-            Room outside = Room.List.FirstOrDefault(r => r.Name == RoomName.Outside);
-            if (outside == null) return;
-            var random = new Random();
+        if (!IsLiberationPlayer(disarm)) return;
+        
+        ev.Player.IsDisarmed = false;
+        SpawnHandling.Instance.GiveLiberatorRole(ev.Player, LiberatorRank.All.ElementAt(0));
+        ev.IsAllowed = false;
+        
+        Room outside = Room.List.FirstOrDefault(r => r.Name == RoomName.Outside);
+        if (outside == null) return;
+        var random = new Random();
 
-            Vector3 localOffset = new Vector3(136.0f, -2.5f, -31.0f);
-            Vector3 spawnPosition = outside.Transform.TransformPoint(localOffset);
-            ev.Player.Position = spawnPosition +
-                              new Vector3((float)random.NextDouble() - 0.5f, 0.0f, (float)random.NextDouble() - 0.5f);
+        Vector3 localOffset = new Vector3(136.0f, -2.5f, -31.0f);
+        Vector3 spawnPosition = outside.Transform.TransformPoint(localOffset);
+        ev.Player.Position = spawnPosition +
+                          new Vector3((float)random.NextDouble() - 0.5f, 0.0f, (float)random.NextDouble() - 0.5f);
+        
+        var totalConnected = Player.ReadyList.Count();
+
+        if (totalConnected == 0)
+            return;
+
+        var scps = Player.ReadyList
+            .Where(p => p.Team == Team.SCPs)
+            .ToList();
+
+        foreach (var scp in scps)
+        {
+            var buff = LiberationPlugin.PluginConfig.HumeShieldBuff;
+            scp.HumeShield += buff;
+            scp.SendHint($"<color=#74fc68>Liberator Buff</color>\n+{buff} <color=#4287f5>Hume Shield</color>", 2.5f);
         }
+    
     }
 
     public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev)
@@ -76,10 +92,12 @@ public class EventsHandler : CustomEventsHandler
         if (attackerScp && victimLiberator)
         {
             ev.IsAllowed = false;
+            return;
         }
         if (victimScp && attackerLiberator)
         {
             ev.IsAllowed = false;
+            return;
         }
         
         if (ev.Attacker != null && ev.Attacker.CurrentItem?.Base is { } item)

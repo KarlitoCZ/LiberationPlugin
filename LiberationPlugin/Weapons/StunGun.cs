@@ -7,7 +7,7 @@ namespace LiberationPlugin.Weapons;
 public sealed class StunGun : Weapon
 {
     public override ItemType ItemType => ItemType.GunRevolver;
-    private float _duration = 10f;
+    private float _duration = LiberationPlugin.PluginConfig.StunDuration;
 
     public override void OnHurting(Player attacker, Player target, DamageHandlerBase handler, ref bool isAllowed)
     {
