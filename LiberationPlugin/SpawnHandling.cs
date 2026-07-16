@@ -89,14 +89,16 @@ public sealed class SpawnHandling
         var stunGun = new StunGun();
         stunGun.Give(player);
         
-        player.SetAmmo(ItemType.Ammo44cal, 18);
-        player.SetAmmo(ItemType.Ammo9x19, 150);
+        player.SetAmmo(ItemType.Ammo44cal, 9);
+        player.SetAmmo(ItemType.Ammo9x19, 60);
 
         KeycardGiver.Instance.GiveKeycard(player, ItemType.KeycardCustomSite02, "Liberator Keycard",
-            new Color32(255, 255, 255, 255), 3, 1, 3, new Color32(255, 89, 106, 255), new Color32(168, 34, 54, 255));
+            new Color32(255, 255, 255, 255), 2, 1, 3, new Color32(255, 89, 106, 255), new Color32(168, 34, 54, 255));
 
         player.SendHint("Arrest and escort everyone. \n Work with SCPs to win. ", duration: 15f);
         player.EnableEffect<SpawnProtected>(1, 10f, true);
+        player.CreateAhpProcess(LiberationPlugin.PluginConfig.Ahp, LiberationPlugin.PluginConfig.Ahp, -1.0f, 1f, 3f, false);
+        player.MaxArtificialHealth = LiberationPlugin.PluginConfig.Ahp;
     }
 
     public void CleanUpLiberatorRole(LiberatorPlayer player)
@@ -120,7 +122,7 @@ public sealed class SpawnHandling
         }
         
         Announcer.Message(
-            $".g2 .g5 $PITCH_0.97 ATTENTION ALL PERSONNEL. $PITCH_1 .g2 BREACH .g4 DETECTED IN ENTRANCE ZONE. $PITCH_0.93 INDENTIFIED {chosenPlayers.Count} UNAUTHORIZED $PITCH_1 L A F PERSONNEL $PITCH_1 .g1 . . LETHAL FORCE AUTHORIZED",
+            $".g2 .g5 $PITCH_0.97 ATTENTION ALL PERSONNEL. $PITCH_1 .g2 BREACH .g4 DETECTED IN ENTRANCE ZONE. $PITCH_0.93 INDENTIFIED {chosenPlayers.Count} UNAUTHORIZED $PITCH_1 L A F PERSONNEL $PITCH_1 .g1 . LETHAL FORCE AUTHORIZED",
             $"Attention all personnel. Breach detected in Entrance-Zone. Identified {chosenPlayers.Count} unauthorized Liberation. Armed. Forces. personnel. Lethal Force Authorized.");
         
         return true;

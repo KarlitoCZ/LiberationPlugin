@@ -9,9 +9,8 @@ using LabApi.Events.CustomHandlers;
 using LabApi.Features.Wrappers;
 using MapGeneration;
 using PlayerRoles;
-using PlayerRoles.FirstPersonControl.Spawnpoints;
-using PlayerRoles.PlayableScps.Scp106;
 using UnityEngine;
+using VoiceChat;
 using Random = System.Random;
 
 

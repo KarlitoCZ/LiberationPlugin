@@ -6,4 +6,5 @@ public class Config
     public int TeamCapMin = 1;
     public float HumeShieldBuff = 250f;
     public float StunDuration = 10f;
+    public float Ahp = 25f;
 }
