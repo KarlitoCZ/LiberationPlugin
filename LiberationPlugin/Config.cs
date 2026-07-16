@@ -7,4 +7,5 @@ public class Config
     public float HumeShieldBuff = 250f;
     public float StunDuration = 10f;
     public float Ahp = 25f;
+    public float SpawnTimer = 160f;
 }

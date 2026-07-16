@@ -14,6 +14,7 @@ using PlayerRoles;
 using PlayerRoles.FirstPersonControl;
 using PlayerRoles.PlayableScps;
 using UnityEngine;
+using Logger = LabApi.Features.Console.Logger;
 using Random = System.Random;
 
 namespace LiberationPlugin;
@@ -23,6 +24,7 @@ public sealed class SpawnHandling
 {
     public static SpawnHandling Instance { get; } = new SpawnHandling();
     public List<LiberatorPlayer> ActiveLiberationPlayers = new();
+    private CoroutineHandle _timerCoroutine;
 
     private SpawnHandling() {}
 
@@ -126,5 +128,42 @@ public sealed class SpawnHandling
             $"Attention all personnel. Breach detected in Entrance-Zone. Identified {chosenPlayers.Count} unauthorized Liberation. Armed. Forces. personnel. Lethal Force Authorized.");
         
         return true;
+    }
+
+    private IEnumerator<float> WatchRoundTime()
+    {
+        var random = new Random();
+        
+        while (true)
+        {
+            if (!Round.IsRoundStarted)
+            {
+                yield return Timing.WaitForSeconds(1);
+                continue;
+            }
+            double secondsElapsed = Round.Duration.TotalSeconds;
+            
+            Logger.Debug(secondsElapsed);
+
+            if (secondsElapsed >= LiberationPlugin.PluginConfig.SpawnTimer + random.Next(-10, 10))
+            {
+                var status = SpawnWave();
+                if (status) yield break;
+            }
+            
+            yield return Timing.WaitForSeconds(1);
+        }
+
+    }
+    
+    public void StartWatcher()
+    {
+        Logger.Debug("Starting watcher...");  
+        _timerCoroutine = Timing.RunCoroutine(WatchRoundTime());
+    }
+
+    public void StopWatcher()
+    {
+        Timing.KillCoroutines(_timerCoroutine);
     }
 }

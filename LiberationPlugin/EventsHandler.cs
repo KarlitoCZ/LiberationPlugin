@@ -100,7 +100,6 @@ public class EventsHandler : CustomEventsHandler
         }
         if (victimLiberator && attackerLiberator)
         {
-            ev.IsAllowed = false;
             return;
         }
         

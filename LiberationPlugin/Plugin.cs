@@ -14,16 +14,17 @@ public class LiberationPlugin : Plugin<Config>
     public override string Name { get; } = "Liberation Plugin";
     public override string Description { get; } = "Add The Liberators to your SCP:SL server";
     public override string Author { get; } = "Karlito";
-    public override Version Version { get; } = new (0, 2, 0, 0);
+    public override Version Version { get; } = new (0, 3, 0, 0);
     public override Version RequiredApiVersion { get; } = new (LabApiProperties.CompiledVersion);
     
-    private static EventsHandler Events = new EventsHandler();
+    private static EventsHandler Events = new();
     
     public override void Enable()
     {
         Instance = this;
         PluginConfig = Config;
         CustomHandlersManager.RegisterEventsHandler(Events);
+        SpawnHandling.Instance.StartWatcher();
     }
 
     public override void Disable()
@@ -32,6 +33,7 @@ public class LiberationPlugin : Plugin<Config>
         PluginConfig = null;
         CustomHandlersManager.UnregisterEventsHandler(Events);
         Weapon.ClearAll();
+        SpawnHandling.Instance.StopWatcher();
     }
 
 }
