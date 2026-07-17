@@ -70,7 +70,6 @@ public sealed class SpawnHandling
                           new Vector3((float)random.NextDouble() - 0.5f, 0.0f, (float)random.NextDouble() - 0.5f);
         player.Rotation = gateARoom.Rotation;
     }
-
     
 
     public void GiveLiberatorRole(Player player, LiberatorRank rank)
@@ -143,8 +142,6 @@ public sealed class SpawnHandling
             }
             double secondsElapsed = Round.Duration.TotalSeconds;
             
-            Logger.Debug(secondsElapsed);
-
             if (secondsElapsed >= LiberationPlugin.PluginConfig.SpawnTimer + random.Next(-10, 10))
             {
                 var status = SpawnWave();
@@ -153,12 +150,10 @@ public sealed class SpawnHandling
             
             yield return Timing.WaitForSeconds(1);
         }
-
     }
     
     public void StartWatcher()
     {
-        Logger.Debug("Starting watcher...");  
         _timerCoroutine = Timing.RunCoroutine(WatchRoundTime());
     }
 
