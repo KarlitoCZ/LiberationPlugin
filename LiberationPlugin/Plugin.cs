@@ -2,7 +2,6 @@
 using LabApi.Events.CustomHandlers;
 using LabApi.Features;
 using LabApi.Loader.Features.Plugins;
-using LiberationPlugin.Weapons;
 
 namespace LiberationPlugin;
 
@@ -16,6 +15,7 @@ public class LiberationPlugin : Plugin<Config>
     public override string Author { get; } = "Karlito";
     public override Version Version { get; } = new (0, 4, 0, 0);
     public override Version RequiredApiVersion { get; } = new (LabApiProperties.CompiledVersion);
+    //public override string ConfigFileName { get; set; } = "config.yml";
     
     private static EventsHandler Events = new();
     
@@ -25,6 +25,7 @@ public class LiberationPlugin : Plugin<Config>
         PluginConfig = Config;
         CustomHandlersManager.RegisterEventsHandler(Events);
         SpawnHandling.Instance.StartWatcher();
+        SaveConfig();
     }
 
     public override void Disable()
