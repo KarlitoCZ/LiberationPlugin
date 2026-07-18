@@ -14,7 +14,7 @@ public class LiberationPlugin : Plugin<PluginConfig>
     public override string Name { get; } = "Liberation Plugin";
     public override string Description { get; } = "Add The Liberators to your SCP:SL server";
     public override string Author { get; } = "Karlito";
-    public override Version Version { get; } = new (0, 4, 0, 0);
+    public override Version Version { get; } = new (1, 0, 0, 0);
     public override Version RequiredApiVersion { get; } = new (LabApiProperties.CompiledVersion);
     //public override string ConfigFileName { get; set; } = "config.yml";
     
