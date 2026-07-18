@@ -5,6 +5,7 @@ using System.Reflection;
 using CustomPlayerEffects;
 using InventorySystem;
 using InventorySystem.Items;
+using InventorySystem.Items.Firearms;
 using LabApi.Features.Wrappers;
 using LiberationPlugin.Util;
 using LiberationPlugin.Weapons;
@@ -84,11 +85,22 @@ public sealed class SpawnHandling
 
         foreach (var i in rank.Loadout)
         {
-            player.Inventory.ServerAddItem(i, ItemAddReason.StartingItem);
+            var item = player.Inventory.ServerAddItem(i, ItemAddReason.StartingItem);
+            if (item is Firearm firearm && FirearmItem.Get(firearm) is { } fi)
+                fi.StoredAmmo = fi.MaxAmmo;
         }
 
         var stunGun = new StunGun();
         stunGun.Give(player);
+        // Also empty the stun gun's magazine
+        foreach (var kvp in player.Inventory.UserInventory.Items)
+        {
+            if (kvp.Value is Firearm f && FirearmItem.Get(f) is { } fi)
+            {
+                fi.StoredAmmo = fi.MaxAmmo;
+                break;
+            }
+        }
         
         player.SetAmmo(ItemType.Ammo44cal, 9);
         player.SetAmmo(ItemType.Ammo9x19, 60);

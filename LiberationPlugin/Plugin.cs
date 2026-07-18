@@ -1,15 +1,16 @@
 ﻿using System;
 using LabApi.Events.CustomHandlers;
 using LabApi.Features;
+using LabApi.Features.Console;
 using LabApi.Loader.Features.Plugins;
 
 namespace LiberationPlugin;
 
 
-public class LiberationPlugin : Plugin<Config>
+public class LiberationPlugin : Plugin<PluginConfig>
 {
     public static Plugin Instance { get; set; } = null!;
-    public static Config PluginConfig { get; set; } = null!;
+    public static PluginConfig PluginConfig { get; set; } = null!;
     public override string Name { get; } = "Liberation Plugin";
     public override string Description { get; } = "Add The Liberators to your SCP:SL server";
     public override string Author { get; } = "Karlito";
@@ -26,6 +27,7 @@ public class LiberationPlugin : Plugin<Config>
         CustomHandlersManager.RegisterEventsHandler(Events);
         SpawnHandling.Instance.StartWatcher();
         SaveConfig();
+        
     }
 
     public override void Disable()
