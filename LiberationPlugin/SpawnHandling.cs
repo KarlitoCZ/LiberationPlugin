@@ -27,10 +27,11 @@ public sealed class SpawnHandling
     public List<LiberatorPlayer> ActiveLiberationPlayers = new();
     private CoroutineHandle _timerCoroutine;
 
-    private SpawnHandling() {}
-
-    public int UntilSpawn = 600;
-
+    private SpawnHandling()
+    {
+        
+    }
+    
     private List<Player> GetSpawnWavePlayers(int minSpawn = 3, int maxSpawn = 10, float spawnPercentage = 0.4f)
     {
         var totalConnected = Player.ReadyList.Count();
@@ -72,6 +73,15 @@ public sealed class SpawnHandling
         player.Rotation = gateARoom.Rotation;
     }
     
+    public LiberatorPlayer? GetLiberationPlayer(Player player)
+    {
+        foreach (var i in ActiveLiberationPlayers)
+        {
+            if (player == i.Player) return i;
+        }
+
+        return null;
+    }
 
     public void GiveLiberatorRole(Player player, LiberatorRank rank)
     {
@@ -81,7 +91,8 @@ public sealed class SpawnHandling
         var libPlayer = new LiberatorPlayer(player, rank);
         ActiveLiberationPlayers.Add(libPlayer);
 
-        player.CustomInfo = "L.A.F. - " + rank.Name;
+        player.CustomInfo = "LAF. - " + rank.Name;
+        
 
         foreach (var i in rank.Loadout)
         {
@@ -92,7 +103,7 @@ public sealed class SpawnHandling
 
         var stunGun = new StunGun();
         stunGun.Give(player);
-        // Also empty the stun gun's magazine
+        
         foreach (var kvp in player.Inventory.UserInventory.Items)
         {
             if (kvp.Value is Firearm f && FirearmItem.Get(f) is { } fi)
@@ -116,6 +127,7 @@ public sealed class SpawnHandling
 
     public void CleanUpLiberatorRole(LiberatorPlayer player)
     {
+        //TimerAPI.UnregisterProperty("custom_role");
         ActiveLiberationPlayers.Remove(player);
         player.Player.CustomInfo = "";
     }

@@ -27,7 +27,7 @@ public class LiberationPlugin : Plugin<PluginConfig>
         CustomHandlersManager.RegisterEventsHandler(Events);
         SpawnHandling.Instance.StartWatcher();
         SaveConfig();
-        
+        RespawnTimer.Enable();
     }
 
     public override void Disable()

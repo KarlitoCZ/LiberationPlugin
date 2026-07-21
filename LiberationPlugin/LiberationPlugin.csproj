@@ -19,6 +19,9 @@
         <Reference Include="Assembly-Csharp">
             <HintPath>$(SL_REFERENCES)/Assembly-CSharp.dll</HintPath>
         </Reference>
+        <Reference Include="TimerApi">
+            <HintPath>/home/karlito/.config/SCP Secret Laboratory/LabAPI/plugins/7777/RespawnTimer.dll</HintPath>
+        </Reference>
         <Reference Include="Assembly-Csharp-firstpass">
             <HintPath>$(SL_REFERENCES)/Assembly-CSharp-firstpass.dll</HintPath>
         </Reference>
