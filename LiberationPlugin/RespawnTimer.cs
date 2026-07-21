@@ -20,6 +20,6 @@ internal static class RespawnTimer
         var libPlayer = SpawnHandling.Instance.GetLiberationPlayer(player);
         if (libPlayer == null) return "";
 
-        return "LAF. -" + libPlayer.Rank.Name;
+        return "LAF. - " + libPlayer.Rank.Name;
     }
 }
