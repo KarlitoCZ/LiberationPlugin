@@ -4,7 +4,7 @@ Add The Liberators to the game!
 ## What are The Liberators?
 This team is a an unofficial faction.
 In their lore they try to help SCPs. Help them in a way, so they can contribute to society in a good way.
-Anyway.
+Try to make the SCPs good and not bad killing machines.
 
 ## In game
 They spawn early in the round.
