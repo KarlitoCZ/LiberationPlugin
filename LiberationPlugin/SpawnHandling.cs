@@ -92,6 +92,7 @@ public sealed class SpawnHandling
         ActiveLiberationPlayers.Add(libPlayer);
 
         player.CustomInfo = "LAF. - " + rank.Name;
+        player.ReferenceHub.nicknameSync.ShownPlayerInfo &= ~PlayerInfoArea.Role;
         
 
         foreach (var i in rank.Loadout)
