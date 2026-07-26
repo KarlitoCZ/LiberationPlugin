@@ -131,6 +131,7 @@ public sealed class SpawnHandling
         //TimerAPI.UnregisterProperty("custom_role");
         ActiveLiberationPlayers.Remove(player);
         player.Player.CustomInfo = "";
+        player.Player.ReferenceHub.nicknameSync.ShownPlayerInfo &= PlayerInfoArea.Role;
     }
 
     public bool SpawnWave()
